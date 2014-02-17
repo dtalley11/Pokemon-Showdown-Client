@@ -280,7 +280,7 @@ var Tools = {
 	resourcePrefix: (function() {
 		var prefix = '';
 		if (document.location.protocol === 'file:') prefix = 'http:';
-		return prefix + '//play.pokemonshowdown.com/';
+		return prefix + '//fuji-labs.net/client/';
 	})(),
 
 	resolveAvatar: function(avatar) {
