@@ -2631,6 +2631,10 @@ exports.BattleFormatsData = {
 		],
 		tier: "Limbo A"
 	},
+	latiasmega: {
+		requiredItem: "Latiasite",
+		tier: "Unreleased"
+	},
 	latios: {
 		viableMoves: {"dracometeor":1,"dragonpulse":1,"surf":1,"thunderbolt":1,"psyshock":1,"roost":1,"trick":1},
 		eventPokemon: [
@@ -2639,6 +2643,10 @@ exports.BattleFormatsData = {
 			{"generation":4,"level":40,"gender":"M","moves":["protect","refresh","lusterpurge","zenheadbutt"]}
 		],
 		tier: "OU"
+	},
+	latiosmega: {
+		requiredItem: "Latiosite",
+		tier: "Unreleased"
 	},
 	kyogre: {
 		viableMoves: {"waterspout":1,"surf":1,"thunder":1,"icebeam":1,"calmmind":1,"rest":1,"sleeptalk":1},
@@ -4470,6 +4478,15 @@ exports.BattleFormatsData = {
 		viableMoves: {"dragondance":1,"earthquake":1,"extremespeed":1,"outrage":1,"coil":1,"stoneedge":1},
 		tier: "Limbo C"
 	},
+	diancie: {
+		tier: "Unreleased"
+	},
+	hoopa: {
+		tier: "Unreleased"
+	},
+	volcanion: {
+		tier: "Unreleased"
+	},
 	missingno: {
 		isNonstandard: true,
 		tier: ""
@@ -4553,6 +4570,68 @@ exports.BattleFormatsData = {
 		viableMoves: {"surf":1,"thunderbolt":1,"icebeam":1,"earthpower":1},
 		isNonstandard: true,
 		tier: "CAP"
+	},
+	breezi: {
+		viableMoves:{"spikes":1,"toxicspikes":1,"encore":1,"wish":1,"sludgebomb":1,"knockoff":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	cupra: {
+		viableMoves:{"megahorn":1,"closecombat":1,"psyshock":1,"willowisp":1,"bugbuzz":1,"protect":1,"toxic":1,"substitute":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	embirch: {
+		viableMoves:{"stealthrock":1,"synthesis":1,"leechseed":1,"substitute":1,"flamethrower":1,"gigadrain":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	flarelm: {
+		viableMoves:{"stealthrock":1,"synthesis":1,"leechseed":1,"substitute":1,"flamethrower":1,"gigadrain":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	necturine: {
+		viableMoves:{"willowisp":1,"shadowsneak":1,"toxic":1,"substitute":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	syclar: {
+		viableMoves: {"furyattack":1,"leer":1,"leechlife":1,"iceshard":1,"focusenergy":1,"icywind":1,"x-scissor":1,"hail":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+	scratchet: {
+		viableMoves:{"stealthrock":1,"roost":1,"bulkup":1,"brickbreak":1,"return":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	argalis: {
+		viableMoves:{"megahorn":1,"closecombat":1,"psyshock":1 ,"willowisp":1,"bugbuzz":1,"protect":1,"toxic":1,"substitute":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	brattler: {
+		viableMoves:{"aromatherapy":1,"synthesis":1,"foulplay":1,"suckerpunch":1,"knockoff":1,"seedbomb":1,"toxic":1,"sunnyday":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+	drasyl: {
+		viableMoves: {"moonblast":1,"dragonpulse":1,"dracometeor":1,"calmmind":1,"storedpower":1,"moonlight":1,"rest":1,"sleeptalk":1,"hypnosis":1,"dreameater":1,"voltswitch":1,"chargebeam":1,"thunderwave":1,"toxic":1,"hurricane":1,"hyperbeam":1,"calmmind":1,"flamethrower":1, "healbell":1,"airslash":1},
+		isNonstandard: true,
+		tier: "Lab"
+	},
+	cawdet: {
+        viableMoves: {"bellydrum":1,"acrobatics":1,"drainpunch":1,"bulletpunch":1,"drillpeck":1,},
+        isNonstandard: true,
+        tier: "CAP"
 	},
 	voodoom: {
 		viableMoves: {"aurasphere":1,"darkpulse":1,"taunt":1,"painsplit":1,"substitute":1,"hiddenpowerice":1,"vacuumwave":1},

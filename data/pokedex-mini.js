@@ -85,7 +85,6 @@ BattlePokemonSprites = {
 	"abra": {num:63, front:{ani:{w:69,h:53}}, back:{ani:{w:74,h:51}}},
 	"kadabra": {num:64, front:{ani:{w:70,h:71}}, back:{ani:{w:93,h:69}}},
 	"alakazam": {num:65, front:{ani:{w:77,h:79}}, back:{ani:{w:71,h:79}}},
-	"alakazammega": {num:65, front:{ani:{w:113,h:115}}, back:{ani:{w:109,h:109}}},
 	"machop": {num:66, front:{ani:{w:39,h:63}}, back:{ani:{w:44,h:63}}},
 	"machoke": {num:67, front:{ani:{w:72,h:87}}, back:{ani:{w:60,h:88}}},
 	"machamp": {num:68, front:{ani:{w:84,h:100}}, back:{ani:{w:73,h:97}}},
@@ -154,7 +153,6 @@ BattlePokemonSprites = {
 	"tauros": {num:128, front:{ani:{w:97,h:95}}, back:{ani:{w:132,h:104}}},
 	"magikarp": {num:129, front:{ani:{w:58,h:60}}, back:{ani:{w:61,h:58}}},
 	"gyarados": {num:130, front:{ani:{w:115,h:99}}, back:{ani:{w:150,h:102}}},
-	"gyaradosmega": {num:130, front:{ani:{w:193,h:122}}, back:{ani:{w:184,h:127}}},	
 	"lapras": {num:131, front:{ani:{w:94,h:84}}, back:{ani:{w:93,h:82}}},
 	"ditto": {num:132, front:{ani:{w:43,h:35}}, back:{ani:{w:36,h:35}}},
 	"eevee": {num:133, front:{ani:{w:64,h:55}}, back:{ani:{w:72,h:54}}},
@@ -806,5 +804,16 @@ BattlePokemonSprites = {
 	"noivern":{num:715, front:{ani:{w:184,h:156}}, back:{ani:{w:162,h:157}}},
 	"xerneas":{num:716, front:{ani:{w:106,h:127}}, back:{ani:{w:94,h:128}}},
 	"yveltal":{num:717, front:{ani:{w:201,h:188}}, back:{ani:{w:186,h:194}}},
-	"zygarde":{num:718, front:{ani:{w:96,h:107}}, back:{ani:{w:113,h:123}}}
+	"argalis":{num:-116,},
+	"brattler":{num:-117,},
+	"breezi":{num:-104,},
+	"cupra":{num:-115,},
+	"embirch":{num:-102,},
+	"flarelm":{num:-103,},
+	"necturine":{num:-115,},
+	"scratchet":{num:-114,},
+	"drasyl":{num:-777,},
+	"cawdet":{num:-205,},
+	"syclar":{num:-101,},
+	"zygarde":{num:71, front:{ani:{w:96,h:107}}, back:{ani:{w:113,h:123}}}
 };

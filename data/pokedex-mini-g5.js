@@ -788,5 +788,16 @@ BattlePokemonSprites = {
 	"noivern":{num:715},
 	"xerneas":{num:716},
 	"yveltal":{num:717},
+	"argalis":{num:-116,},
+	"brattler":{num:-117,},
+	"breezi":{num:-104,},
+	"cupra":{num:-115,},
+	"embirch":{num:-102,},
+	"flarelm":{num:-103,},
+	"necturine":{num:-115,},
+	"scratchet":{num:-114,},
+	"drasyl":{num:-777,},
+	"cawdet":{num:-205,},
+	"syclar":{num:-101,},
 	"zygarde":{num:718}
 };
