@@ -901,7 +901,7 @@ function Battle(frame, logFrame, noPreload) {
 		left = 210;
 		top = 245;
 		scale = 1;
-		scale = 2 - 1 * (loc.z / 200);
+		scale = 1.5 - 0.5 * (loc.z / 200);
 		if (scale < .1) scale = .1;
 
 		left += (410 - 190) * (loc.z / 200);
@@ -3387,11 +3387,11 @@ function Battle(frame, logFrame, noPreload) {
 				switch (args[2]) {
 				case 'brn':
 					self.resultAnim(poke, 'Burned', 'brn', animDelay);
-					actions += "" + poke.getName() + " was burned!";
+					actions += "" + poke.getName() + " was burned" + (effect.exists ? " by the " + effect.name : "") + "!";
 					break;
 				case 'tox':
 					self.resultAnim(poke, 'Toxic poison', 'psn', animDelay);
-					actions += "" + poke.getName() + " was badly poisoned!";
+					actions += "" + poke.getName() + " was badly poisoned" + (effect.exists ? " by the " + effect.name : "") + "!";
 					break;
 				case 'psn':
 					self.resultAnim(poke, 'Poisoned', 'psn', animDelay);
@@ -4252,7 +4252,7 @@ function Battle(frame, logFrame, noPreload) {
 					actions += '' + poke.getName() + ' anchors itself!';
 					break;
 				case 'symbiosis':
-					actions += '' + poke.getName() + ' shared its ' + Tools.getItem(args[3]).name + ' with ' + ofpoke.getLowerName();
+					actions += '' + ofpoke.getName() + ' shared its ' + Tools.getItem(args[3]).name + ' with ' + poke.getLowerName();
 					break;
 
 				// item activations
