@@ -255,8 +255,6 @@ class NTBBLadder {
 			return false;
 		}
 
-		$elo = $user['rating']['acre'];
-
 		$rating = new GlickoPlayer($user['rating']['r'], $user['rating']['rd']);
 		if ($user['rating']['rpdata']) {
 			$rpdata = explode('##',$user['rating']['rpdata']);
@@ -276,16 +274,10 @@ class NTBBLadder {
 					$rating->rating += $offset;
 					$offset = 0;
 				}
-
-				if ($elo >= 1400) {
-					$elo -= 1 + intval(($elo-1400)/50);
-				}
-
 				$user['rating']['rptime'] = $this->nextrp($user['rating']['rptime']);
 			}
 			$user['rating']['r'] = $rating->rating;
 			$user['rating']['rd'] = $rating->rd;
-			$user['rating']['lacre'] = $user['rating']['acre'] = $elo;
 		}
 
 		if ($newM) {
@@ -332,8 +324,9 @@ class NTBBLadder {
 			$user['rating']['rpdata'] .= '##'.$offset;
 		}
 
+
 		if ($newM) {
-			$user['rating']['oldacre'] = $elo;
+			$elo = $user['rating']['oldacre'] = $user['rating']['acre'];
 
 			$K = 50;
 			if ($elo < 1100) {
@@ -342,7 +335,7 @@ class NTBBLadder {
 				} else if ($newM['score'] > 0.5) {
 					$K = 80 - ($elo - 1000)*30/100;
 				}
-			} else if ($elo > 1300) {
+			} else if ($elo > 1400) {
 				$K = 40;
 			} else if ($elo > 1600) {
 				$K = 32;
