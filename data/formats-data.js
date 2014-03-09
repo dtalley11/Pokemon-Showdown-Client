@@ -4487,14 +4487,17 @@ exports.BattleFormatsData = {
 	},
 	pumpkaboosmall: {
 		viableMoves: {"willowisp":1,"shadowsneak":1,"fireblast":1,"painsplit":1,"seedbomb":1},
+		unreleasedHidden: true,
 		tier: "LC"
 	},
 	pumpkaboolarge: {
 		viableMoves: {"willowisp":1,"shadowsneak":1,"fireblast":1,"painsplit":1,"seedbomb":1},
+		unreleasedHidden: true,
 		tier: "LC"
 	},
 	pumpkaboosuper: {
 		viableMoves: {"willowisp":1,"shadowsneak":1,"fireblast":1,"painsplit":1,"seedbomb":1},
+		unreleasedHidden: true,
 		tier: "LC"
 	},
 	gourgeist: {
@@ -4503,14 +4506,17 @@ exports.BattleFormatsData = {
 	},
 	gourgeistsmall: {
 		viableMoves: {"willowisp":1,"shadowsneak":1,"painsplit":1,"seedbomb":1,"leechseed":1,"phantomforce":1,"explosion":1},
+		unreleasedHidden: true,
 		tier: "Limbo"
 	},
 	gourgeistlarge: {
 		viableMoves: {"willowisp":1,"shadowsneak":1,"painsplit":1,"seedbomb":1,"leechseed":1,"phantomforce":1,"explosion":1},
+		unreleasedHidden: true,
 		tier: "Limbo"
 	},
 	gourgeistsuper: {
 		viableMoves: {"willowisp":1,"shadowsneak":1,"painsplit":1,"seedbomb":1,"leechseed":1,"phantomforce":1,"explosion":1},
+		unreleasedHidden: true,
 		tier: "Limbo B"
 	},
 	bergmite: {
@@ -4637,9 +4643,86 @@ exports.BattleFormatsData = {
 		isNonstandard: true,
 		tier: "CAP"
 	},
+	breezi: {
+		viableMoves:{"spikes":1,"toxicspikes":1,"encore":1,"wish":1,"sludgebomb":1,"knockoff":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	cupra: {
+		viableMoves:{"megahorn":1,"closecombat":1,"psyshock":1,"willowisp":1,"bugbuzz":1,"protect":1,"toxic":1,"substitute":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	embirch: {
+		viableMoves:{"stealthrock":1,"synthesis":1,"leechseed":1,"substitute":1,"flamethrower":1,"gigadrain":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	flarelm: {
+		viableMoves:{"stealthrock":1,"synthesis":1,"leechseed":1,"substitute":1,"flamethrower":1,"gigadrain":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	necturine: {
+		viableMoves:{"willowisp":1,"shadowsneak":1,"toxic":1,"substitute":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	syclar: {
+		viableMoves: {"furyattack":1,"leer":1,"leechlife":1,"iceshard":1,"focusenergy":1,"icywind":1,"x-scissor":1,"hail":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+	scratchet: {
+		viableMoves:{"stealthrock":1,"roost":1,"bulkup":1,"brickbreak":1,"return":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	argalis: {
+		viableMoves:{"megahorn":1,"closecombat":1,"psyshock":1 ,"willowisp":1,"bugbuzz":1,"protect":1,"toxic":1,"substitute":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+
+	brattler: {
+		viableMoves:{"aromatherapy":1,"synthesis":1,"foulplay":1,"suckerpunch":1,"knockoff":1,"seedbomb":1,"toxic":1,"sunnyday":1},
+		isNonstandard: true,
+		tier: "CAP"
+	},
+	drasyl: {
+		viableMoves: {"moonblast":1,"dragonpulse":1,"dracometeor":1,"calmmind":1,"storedpower":1,"moonlight":1,"rest":1,"sleeptalk":1,"hypnosis":1,"dreameater":1,"voltswitch":1,"chargebeam":1,"thunderwave":1,"toxic":1,"hurricane":1,"hyperbeam":1,"calmmind":1,"flamethrower":1, "healbell":1,"airslash":1},
+		isNonstandard: true,
+		tier: "Lab"
+	},
+	cawdet: {
+        viableMoves: {"bellydrum":1,"acrobatics":1,"drainpunch":1,"bulletpunch":1,"drillpeck":1,},
+        isNonstandard: true,
+        tier: "CAP"
+	},
 	voodoom: {
 		viableMoves: {"aurasphere":1,"darkpulse":1,"taunt":1,"painsplit":1,"substitute":1,"hiddenpowerice":1,"vacuumwave":1},
 		isNonstandard: true,
 		tier: "CAP"
+	},
+	infelino: {     
+        viableMoves:{"suckerpunch":1,"flareblitz":1,"pursuit":1,"u-turn":1,"defog":1,"icefang":1,"honeclaws":1,"thunderfang":1},      
+        isNonstandard: true,     
+        tier: "Lab"
+	},
+	octoshock:{
+	viableMoves:{"hurricane":1,"brine":1,"octazooka":1,"zapcannon":1,"hydropump":1,"focusblast":1,"aquajet":1},
+	isNonstandard: true,
+	tier: "Lab"
+	},
+	adametal: {
+        viableMoves:{"harden":1,"scratch":1,"metalclaw":1,"dragonbreath":1,"bite":1,"metalsound":1,"geargrind":1,"ironhead":1,"earthquake":1,"dragonclaw":1,"rockslide":1,"irontail":1,"outrage":1,"shadowclaw":1,"stoneedge":1},
+        isNonstandard: true,
+        tier: "Lab"
 	}
 };
