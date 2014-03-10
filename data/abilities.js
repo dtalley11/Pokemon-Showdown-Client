@@ -288,6 +288,7 @@ exports.BattleAbilities = {
 		num: -6,
 		gen: 6
 	},
+	
 	"chlorophyll": {
 		desc: "If this Pokemon is active while Sunny Day is in effect, its speed is temporarily doubled.",
 		shortDesc: "If Sunny Day is active, this Pokemon's Speed is doubled.",

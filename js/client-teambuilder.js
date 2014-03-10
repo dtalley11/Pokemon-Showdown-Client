@@ -1058,10 +1058,11 @@
 						if (this.curTeam.format === 'cap') return ['CAP','OU','BL','Limbo A','Limbo B','Limbo C','Limbo','NFE','LC Uber','LC'];
 						if (this.curTeam.format === 'Lab') return ['Lab','OU','BL','Limbo A','Limbo B','Limbo C','Limbo','NFE','LC Uber','LC'];
 						if (this.curTeam.format === 'uu') return ['Limbo A','Limbo B','Limbo C','Limbo','NFE','LC Uber','LC'];
+						if (this.curTeam.format === 'lab') return ['Lab','OU','BL','Limbo A','Limbo B','Limbo C','Limbo','NFE','LC Uber','LC'];
 						if (this.curTeam.format === 'lc') return ['LC','NFE','Limbo'];
 					}
-					// return ['OU','Limbo','Uber','BL','UU','BL2','RU','BL3','NU','Unreleased','Limbo NFE','NFE','LC Uber','LC','CAP'];
-					return ['OU','Uber','BL','Limbo A','Limbo B','Limbo C','Limbo','NFE','LC Uber','LC','Unreleased','CAP'];
+					// return ['OU','Limbo','Uber','BL','UU','BL2','RU','BL3','NU','Unreleased','Limbo NFE','NFE','LC Uber','LC','CAP','Lab'];
+					return ['OU','Uber','BL','Limbo A','Limbo B','Limbo C','Limbo','NFE','LC Uber','LC','Unreleased','CAP','Lab'];
 				}
 				var tierData = exports.BattleFormatsData[toId(pokemon.species)];
 				if (!tierData) return 'Illegal';
