@@ -12,7 +12,7 @@ body {
 	font-family: Verdana, Helvetica, Arial, sans-serif;
 
 	/* license: CC-BY source: http://commons.wikimedia.org/wiki/File:%22La_piedra%22_(2809466426).jpg */
-	background: #546bac url(../fx/client-bg-horizon.jpg) no-repeat left center fixed;
+	background: #344b6c url(../fx/client-bg-charizards.jpg) no-repeat left center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -566,6 +566,11 @@ p.or:after {
 	bottom: 15px;
 	left: 20px;
 	color: #BBBBBB;
+	text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black;
+}
+.mainmenufooter blockquote {
+	margin: 0 0 1em 0;
+	padding: 0;
 }
 .mainmenufooter small {
 	font-size: 9pt;
@@ -573,7 +578,6 @@ p.or:after {
 .mainmenufooter a {
 	text-decoration: underline;
 	color: #6688CC;
-	text-shadow: 0 -1px 0 black;
 }
 .mainmenufooter a:hover {
 	text-decoration: underline;
@@ -980,6 +984,12 @@ a.ilink:hover {
 }
 
 /* Tournaments */
+
+.tournaments-info > ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
 
 .tournament-wrapper {
 	display: none;

@@ -552,11 +552,11 @@
 				$.get(app.user.getActionPHP() + '?act=ladderget&user='+encodeURIComponent(target), Tools.safeJSON(function(data) {
 					try {
 						var buffer = '<div class="ladder"><table>';
-						buffer += '<tr><td colspan="7">User: <strong>'+target+'</strong></td></tr>';
+						buffer += '<tr><td colspan="8">User: <strong>'+target+'</strong></td></tr>';
 						if (!data.length) {
-							buffer += '<tr><td colspan="7"><em>This user has not played any ladder games yet.</em></td></tr>';
+							buffer += '<tr><td colspan="8"><em>This user has not played any ladder games yet.</em></td></tr>';
 						} else {
-							buffer += '<tr><th>Format</th><th>Elo</th><th>GXE</th><th>Glicko-1</th><th>COIL</th><th>ARMS</th><th>W</th><th>L</th><th>T</th></tr>';
+							buffer += '<tr><th>Format</th><th>Elo</th><th>GXE</th><th>Glicko-1</th><th>COIL</th><th>W</th><th>L</th><th>T</th></tr>';
 							for (var i=0; i<data.length; i++) {
 								var row = data[i];
 								buffer += '<tr><td>'+row.formatid+'</td><td><strong>'+Math.round(row.acre)+'</strong></td><td>'+Math.round(row.gxe,1)+'</td><td>';
@@ -566,8 +566,13 @@
 									buffer += '<em>'+Math.round(row.rpr)+'<small> &#177; '+Math.round(row.rprd)+'</small></em>';
 								}
 								var N=parseInt(row.w)+parseInt(row.l)+parseInt(row.t);
-								buffer += '<td>'+Math.round(40.0*parseFloat(row.gxe)*Math.pow(2.0,-34.0/N),0)+'</td>';
-								buffer += '<td>'+Math.round(1000.0+(2*parseFloat(row.gxe)-100)*N/4.0,0)+'</td>';
+								if (row.formatid === 'lcsuspecttest') {
+									buffer += '<td>'+Math.round(40.0*parseFloat(row.gxe)*Math.pow(2.0,-43.0/N),0)+'</td>';
+								} else if (row.formatid === 'oususpecttest') {
+									buffer += '<td>'+Math.round(40.0*parseFloat(row.gxe)*Math.pow(2.0,-17.0/N),0)+'</td>';
+								} else {
+									buffer += '<td>--</td>';
+								}
 								buffer += '</td><td>'+row.w+'</td><td>'+row.l+'</td><td>'+row.t+'</td></tr>';
 							}
 						}

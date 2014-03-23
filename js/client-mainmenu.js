@@ -38,8 +38,6 @@
 				buf += '<p><label class="label">Format:</label>'+this.renderFormats()+'</p>';
 				buf += '<p><label class="label">Team:</label>'+this.renderTeams()+'</p>';
 				buf += '<p><button class="button big" name="search"><strong>Look for a battle</strong></button></p></form></div>';
-
-				buf += '<div class="menugroup"><p><button class="button" name="roomlist">Watch a battle</button></p></div>';
 			}
 
 			buf += '<div class="menugroup"><p><button class="button" name="joinRoom" value="teambuilder">Teambuilder</button></p>';
@@ -49,11 +47,18 @@
 				buf += '<p><button class="button" name="joinRoom" value="ladder">Ladder</button></p>';
 			}
 			buf += '<p><button class="button" name="credits">Credits</button></p></div></div>';
+
+			if (!app.down) buf += '<div class="menugroup"><p><button class="button" name="roomlist">Watch a battle</button></p></div>';
+
 			this.$('.mainmenu').html(buf);
 
 			// right menu
 			if (!app.down) {
-				this.$('.rightmenu').html('<div class="menugroup"><p><button class="button" name="joinRoom" value="lobby">Join lobby chat</button></p></div>');
+				if (document.location.hostname === 'play.pokemonshowdown.com') {
+					this.$('.rightmenu').html('<div class="menugroup"><p><button class="button" name="joinRoom" value="rooms">Join chat</button></p></div>');
+				} else {
+					this.$('.rightmenu').html('<div class="menugroup"><p><button class="button" name="joinRoom" value="lobby">Join lobby chat</button></p></div>');
+				}
 			}
 
 			// footer
@@ -922,12 +927,12 @@
 			buf += '<li><p><strong>Mathieu Dias-Martins</strong> [Marty-D] <small>&ndash; Research (game mechanics), Development</small></p></li></ul>';
 			buf += '<h2>Contributors</h2>';
 			buf += '<ul><li><p><strong>Andrew Goodsell</strong> [Zracknel] <small>&ndash; Art (battle weather backdrops)</small></p></li>';
+			buf += '<li><p><strong>Ben Frengley</strong> [TalkTakesTime] <small>&ndash; Development</small></p></li>';
 			buf += '<li><p><strong>Cody Thompson</strong> [Rising_Dusk] <small>&ndash; Development</small></p></li>';
-			buf += '<li><p><a href="http://kyle-dove.deviantart.com/" target="_blank" class="subtle"><strong>Kyle Dove</strong> [Kyle_Dove]</a> <small>&ndash; Art (battle backdrops)</small></p></li>';
 			buf += '<li><p><strong>Leonardo Julca</strong> [Slayer95] <small>&ndash; Development</small></p></li>';
-			buf += '<li><p><strong>Robin Vandenbrande</strong> [Quinella] <small>&ndash; Development</small></p></li>';
-			buf += '<li><p><a href="http://yilx.deviantart.com/" target="_blank" class="subtle"><strong>Samuel Teo</strong> [Yilx]</a> <small>&ndash; Art (main background)</small></p></li>';
-			buf += '<li><p><a href="http://vtas.deviantart.com/" target="_blank" class="subtle"><strong>Vivian Zou</strong> [Vtas]</a> <small>&ndash; Art (alternate main background)</small></p></li>';
+			buf += '<li><p><strong>Robin Vandenbrande</strong> [Quinella] <small>&ndash; Development</small></p></li></ul>';
+			buf += '<h2>More</h2>';
+			buf += '<ul><li><p><a href="http://pokemonshowdown.com/credits" target="_blank">Full Credits List</a></p></li></ul>';
 			buf += '<p class="buttonbar"><button name="close" class="autofocus"><strong>They sound like cool people</strong></button></p>';
 			this.$el.addClass('credits').html(buf);
 		}
