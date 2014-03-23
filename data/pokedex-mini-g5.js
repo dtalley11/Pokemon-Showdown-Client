@@ -803,5 +803,9 @@ BattlePokemonSprites = {
 	"adametal":{num:-888},
 	"octoshock":{num:-990},
 	"infelino":{num:-999},
+	"bombee":{num:-1010},
+	"babee":{num:-1011},
+	"embuzzle":{num:-1012},
+	"thornata":{num:-1013},
 	"zygarde":{num:718}
 };

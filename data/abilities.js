@@ -288,7 +288,6 @@ exports.BattleAbilities = {
 		num: -6,
 		gen: 6
 	},
-	
 	"chlorophyll": {
 		desc: "If this Pokemon is active while Sunny Day is in effect, its speed is temporarily doubled.",
 		shortDesc: "If Sunny Day is active, this Pokemon's Speed is doubled.",
@@ -619,9 +618,9 @@ exports.BattleAbilities = {
 		onAfterDamage: function(damage, target, source, move) {
 			if (move && move.isContact && !source.status) {
 				var r = this.random(100);
-				if (r < 11) source.setStatus('slp');
-				else if (r < 21) source.setStatus('par');
-				else if (r < 30) source.setStatus('psn');
+				if (r < 11) source.setStatus('slp', target);
+				else if (r < 21) source.setStatus('par', target);
+				else if (r < 30) source.setStatus('psn', target);
 			}
 		},
 		id: "effectspore",
@@ -2770,7 +2769,7 @@ exports.BattleAbilities = {
 		onAfterSetStatus: function(status, target, source) {
 			if (!source || source === target) return;
 			if (status.id === 'slp' || status.id === 'frz') return;
-			source.trySetStatus(status);
+			source.trySetStatus(status, target);
 		},
 		id: "synchronize",
 		name: "Synchronize",
@@ -3288,6 +3287,29 @@ exports.BattleAbilities = {
 		},
 		rating: 4,
 		num: -3
+	},
+	// CUSTOM vegetate ABILITY FOR Thornata
+	"vegetate": {
+		desc: "Turns all of this Pokemon's Normal-typed attacks into Grass-typed and deal 1.3x damage. Does not affect Hidden Power.",
+		shortDesc: "This Pokemon's Normal moves become Grass-type and do 1.3x damage.",
+		onModifyMove: function(move, pokemon) {
+			if (move.type === 'Normal' && move.id !== 'hiddenpower') {
+				move.type = 'Grass';
+				pokemon.addVolatile('vegetate');
+			}
+		},
+		effect: {
+			duration: 1,
+			onBasePowerPriority: 8,
+			onBasePower: function(basePower, pokemon, target, move) {
+				return this.chainModify([0x14CD, 0x1000]);
+			}
+		},
+		id: "vegetate",
+		name: "Vegetate",
+		rating: 3,
+		num: -6,
+		gen: 6
 	},
 	"persistent": {
 		desc: "Increases the duration of many field effects by two turns when used by this Pokémon.",

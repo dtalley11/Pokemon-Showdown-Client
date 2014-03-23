@@ -255,17 +255,20 @@ exports.BattleScripts = {
 				}
 			}
 			hits = Math.floor(hits);
+			var nullDamage = true;
 			for (var i=0; i<hits && target.hp && pokemon.hp; i++) {
 				if (!move.sourceEffect && !move.sleepUsable && pokemon.status === 'slp') break;
 
 				var moveDamage = this.moveHit(target, pokemon, move);
 				if (moveDamage === false) break;
+				if (nullDamage && (moveDamage || moveDamage === 0)) nullDamage = false;
 				// Damage from each hit is individually counted for the
 				// purposes of Counter, Metal Burst, and Mirror Coat.
 				damage = (moveDamage || 0);
 				this.eachEvent('Update');
 			}
 			if (i === 0) return true;
+			if (nullDamage) damage = false;
 			this.add('-hitcount', target, i);
 		} else {
 			damage = this.moveHit(target, pokemon, move);
@@ -283,7 +286,7 @@ exports.BattleScripts = {
 		return damage;
 	},
 	moveHit: function(target, pokemon, move, moveData, isSecondary, isSelf) {
-		var damage = 0;
+		var damage;
 		move = this.getMoveCopy(move);
 
 		if (!moveData) moveData = move;
@@ -1023,7 +1026,7 @@ exports.BattleScripts = {
 				case 'stoneedge':
 					if (hasMove['headsmash']) rejected = true;
 					break;
-				case 'bonemerang': case 'earthpower':
+				case 'bonemerang': case 'earthpower': case 'bulldoze':
 					if (hasMove['earthquake']) rejected = true;
 					break;
 				case 'dragonclaw':
@@ -1042,7 +1045,7 @@ exports.BattleScripts = {
 					if (hasMove['gunkshot']) rejected = true;
 					break;
 				case 'psychic':
-					if (hasMove['psyshock']) rejected = true;
+					if (hasMove['psyshock'] || hasMove['storedpower']) rejected = true;
 					break;
 				case 'fusionbolt':
 					if (setupType && hasMove['boltstrike']) rejected = true;
@@ -1055,6 +1058,9 @@ exports.BattleScripts = {
 					break;
 				case 'drainingkiss':
 					if (hasMove['dazzlinggleam']) rejected = true;
+					break;
+				case 'voltswitch':
+					if (hasMove['uturn']) rejected = true;
 					break;
 
 				// Status:
@@ -1319,6 +1325,9 @@ exports.BattleScripts = {
 				if ((abilities[0] === 'Chlorophyll' || abilities[1] === 'Chlorophyll' || abilities[2] === 'Chlorophyll') && ability !== 'Solar Power' && hasMove['sunnyday']) {
 					ability = 'Chlorophyll';
 				}
+				if (template.id === 'sigilyph') {
+					ability = 'Magic Guard';
+				}
 				if (template.id === 'combee') {
 					// it always gets Hustle but its only physical move is Endeavor, which loses accuracy
 					ability = 'Honey Gather';
@@ -1338,6 +1347,10 @@ exports.BattleScripts = {
 			var shouldMegaEvo = this.canMegaEvo(template);
 			if (template.species === 'Alakazam' || template.species === 'Scizor' || template.species === 'Garchomp') {
 				shouldMegaEvo = 'maybe';
+			}
+			
+			if (template.species === 'Latios' || template.species === 'Latias') {
+				shouldMegaEvo = false;
 			}
 
 			item = 'Leftovers';
@@ -1416,10 +1429,10 @@ exports.BattleScripts = {
 				item = 'Life Orb';
 			} else if (ability === 'Unburden') {
 				item = 'Red Card';
-				// Give Unburden mons a Normal Gem if they have a Normal-type attacking move
+				// Give Unburden mons a Normal Gem if they have a Normal-type attacking move (except Explosion)
 				for (var m in moves) {
 					var move = this.getMove(moves[m]);
-					if (move.type === 'Normal' && (move.basePower || move.basePowerCallback)) {
+					if (move.type === 'Normal' && (move.basePower || move.basePowerCallback) && move.id !== 'explosion') {
 						item = 'Normal Gem';
 						break;
 					}
@@ -1474,9 +1487,7 @@ exports.BattleScripts = {
 			} else if ((template.baseStats.hp+75)*(template.baseStats.def+template.baseStats.spd+175) > 60000 || template.species === 'Skarmory' || template.species === 'Forretress') {
 				// skarmory and forretress get exceptions for their typing
 				item = 'Leftovers';
-			} else if (counter.Physical + counter.Special >= 3 && setupType) {
-				item = 'Life Orb';
-			} else if (counter.Special >= 3 && setupType) {
+			} else if ((counter.Physical + counter.Special >= 3 || counter.Special >= 3) && setupType && ability !== 'Sturdy') {
 				item = 'Life Orb';
 			} else if (counter.Physical + counter.Special >= 4 && template.baseStats.def + template.baseStats.spd > 179) {
 				item = 'Assault Vest';
@@ -1498,7 +1509,7 @@ exports.BattleScripts = {
 				item = 'Air Balloon';
 			} else if (hasType['Poison']) {
 				item = 'Black Sludge';
-			} else if (counter.Status <= 1) {
+			} else if (counter.Status <= 1 && ability !== 'Sturdy') {
 				item = 'Life Orb';
 			} else {
 				item = 'Leftovers';
@@ -1705,8 +1716,6 @@ exports.BattleScripts = {
 		var typeCount = {};
 		var typeComboCount = {};
 		var baseFormes = {};
-		var uberCount = 0;
-		var nuCount = 0;
 		var megaCount = 0;
 
 		for (var i=0; i<keys.length && pokemonLeft < 6; i++) {
@@ -1912,7 +1921,7 @@ exports.BattleScripts = {
 					if (move.type === 'Grass') counter['overgrow']++;
 					if (move.type === 'Bug') counter['swarm']++;
 					if (move.type === 'Water') counter['torrent']++;
-					// Make sure not to count Knock Off, Rapid Spin, etc.
+					// Make sure not to count Rapid Spin, etc.
 					if (move.basePower > 20 || move.multihit || move.basePowerCallback) {
 						damagingMoves.push(move);
 						damagingMoveIndex[moveid] = k;
@@ -2121,6 +2130,9 @@ exports.BattleScripts = {
 					break;
 				case 'hiddenpowerice':
 					if (hasMove['icywind']) rejected = true;
+					break;
+				case 'stone edge':
+					if (hasMove['rockblast']) rejected = true;
 					break;
 
 				// Status:
@@ -2462,7 +2474,7 @@ exports.BattleScripts = {
 				item = 'Leftovers';
 			} else if (template.species === 'Dusclops') {
 				item = 'Eviolite';
-			} else if (template.species === 'Scrafty') {
+			} else if (template.species === 'Scrafty' && counter['Status'] === 0) {
 				item = 'Assault Vest';
 			} else if (template.species === 'Amoonguss') {
 				item = 'Black Sludge';
@@ -2575,8 +2587,15 @@ exports.BattleScripts = {
 		}
 
 		// We choose level based on BST. Min level is 70, max level is 99. 600+ BST is 70, less than 300 is 99. Calculate with those values.
-		// Every 10.35 BST adds a level from 70 up to 99. Results are floored.
-		var bst = template.baseStats.hp + template.baseStats.atk + template.baseStats.def + template.baseStats.spa + template.baseStats.spd + template.baseStats.spe;
+		// Every 10.35 BST adds a level from 70 up to 99. Results are floored. Uses the Mega's stats if holding a Mega Stone
+		// To-do: adjust levels of mons with boosting items (Light Ball, Thick Club etc)
+		var itemObj = this.getItem(item);
+		if (shouldMegaEvo && itemObj.megaEvolves && itemObj.megaEvolves === template.species) {
+			var megaTemplate = this.getTemplate(itemObj.megaStone);
+			var bst = megaTemplate.baseStats.hp + megaTemplate.baseStats.atk + megaTemplate.baseStats.def + megaTemplate.baseStats.spa + megaTemplate.baseStats.spd + megaTemplate.baseStats.spe;
+		} else {
+			var bst = template.baseStats.hp + template.baseStats.atk + template.baseStats.def + template.baseStats.spa + template.baseStats.spd + template.baseStats.spe;
+		}
 		var level = 70 + Math.floor(((600 - clampIntRange(bst, 300, 600)) / 10.35));
 
 		return {
@@ -2589,22 +2608,5 @@ exports.BattleScripts = {
 			level: level,
 			shiny: (Math.random()*1024<=1)
 		};
-	},
-	randomSeasonalFFTeam: function(side) {
-		var seasonalPokemonList = [
-			'charizard', 'ninetales', 'houndoom', 'arceusfire', 'arcanine', 'moltres', 'rapidash', 'magmar', 'quilava', 'typhlosion',
-			'entei', 'hooh', 'blaziken', 'rotomheat', 'chandelure', 'magcargo', 'reshiram', 'zekrom', 'heatran', 'arceusdragon',
-			'arceusfighting', 'seadra', 'kingdra', 'gyarados', 'dunsparce', 'milotic', 'drapion', 'growlithe', 'paras', 'parasect',
-			'magikarp', 'suicune', 'raikou', 'absol', 'spiritomb', 'horsea', 'ponyta', 'blitzle', 'zebstrika'
-		];
-		seasonalPokemonList = seasonalPokemonList.randomize();
-		var team = [];
-		for (var i=0; i<6; i++) {
-			var set = this.randomSet(seasonalPokemonList[i], i);
-			if (seasonalPokemonList[i] === 'gyarados') set.shiny = true;
-			set.moves[3] = 'Explosion';
-			team.push(set);
-		}
-		return team;
 	}
 };

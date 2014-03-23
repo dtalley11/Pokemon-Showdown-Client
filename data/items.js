@@ -1833,7 +1833,8 @@ exports.BattleItems = {
 			basePower: 130
 		},
 		onModifyPokemon: function(pokemon) {
-			pokemon.negateImmunity['Ground'] = true;
+			if (pokemon.negateImmunity['Ground']) return;
+			pokemon.negateImmunity['Ground'] = 'IgnoreEffectiveness';
 		},
 		onModifySpe: function(speMod) {
 			return this.chain(speMod, 0.5);
