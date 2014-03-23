@@ -804,7 +804,7 @@ BattlePokemonSprites = {
 	"octoshock":{num:-990},
 	"infelino":{num:-999},
 	"bombee":{num:-1010},
-	"babee":{num:-1011},
+	"babee":{num:-1011, front:{ani:{w:45,h:49}}, back:{ani:{w:52,h:50}}},
 	"embuzzle":{num:-1012},
 	"thornata":{num:-1013},
 	"zygarde":{num:718}
