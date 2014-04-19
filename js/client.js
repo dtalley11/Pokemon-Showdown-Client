@@ -413,6 +413,7 @@
 
 			// Simple connection: no cross-domain logic needed.
 			Config.server = Config.server || Config.defaultserver;
+			// Config.server.afd = true;
 			Storage.loadTeams();
 			this.trigger('init:loadprefs');
 			return this.connect();
@@ -471,6 +472,7 @@
 						};
 						// server config information
 						Config.server = data.server;
+						// Config.server.afd = true;
 						if (Config.server.registered) {
 							var $link = $('<link rel="stylesheet" ' +
 								'href="//play.pokemonshowdown.com/customcss.php?server=' +
@@ -551,119 +553,6 @@
 			};
 			this.socket = constructSocket();
 
-			/**
-			 * This object defines event handles for JSON-style messages.
-			 */
-			var events = {
-				/**
-				 * These are all deprecated. Stop using them. :|
-				 */
-				init: function (data) {
-					if (data.name !== undefined) {
-						// Correct way to update user data:
-						//   |updateuser|NAME|NAMED|AVATAR
-						// NAMED should be 1 or 0
-						self.user.set({
-							name: data.name,
-							userid: toUserid(data.name),
-							named: data.named
-						});
-					}
-					if (data.room) {
-						// Correct way to initialize rooms:
-						//   >ROOMID
-						//   |init|ROOMTYPE
-						//   LOG
-						if (data.room === 'lobby') {
-							self.addRoom('lobby');
-						} else {
-							self.joinRoom(data.room, data.roomType);
-						}
-						if (data.log) {
-							self.rooms[data.room].add(data.log.join('\n'));
-						} else if (data.battlelog) {
-							self.rooms[data.room].init(data.battlelog.join('\n'));
-						}
-						if (data.u) {
-							self.rooms[data.room].parseUserList(data.u);
-						}
-					}
-				},
-				update: function (data) {
-					if (data.name !== undefined) {
-						// Correct way to send user updates:
-						//   |updateuser|NAME|NAMED|AVATAR
-						self.user.set({
-							name: data.name,
-							userid: toUserid(data.name),
-							named: data.named
-						});
-						self.user.setPersistentName(data.named ? data.name : null);
-					}
-					if (data.updates) {
-						// Correct way to send battlelog updates:
-						//   >ROOMID
-						//   BATTLELOG
-						var room = self.rooms[data.room];
-						if (room) room.receive(data.updates.join('\n'));
-					}
-					if ('challengesFrom' in data) {
-						// Correct way to send challenge updates:
-						//   |updatechallenges|CHALLENGEDATA
-						if (self.rooms['']) self.rooms[''].updateChallenges(data);
-					}
-					if ('searching' in data) {
-						// Correct way to send search updates:
-						//   |updatesearch|SEARCHDATA
-						if (self.rooms['']) self.rooms[''].updateSearch(data);
-					}
-					if ('request' in data) {
-						// Correct way to send requests:
-						//   >ROOMID
-						//   |request|REQUEST
-						var room = self.rooms[data.room];
-						if (room && room.receiveRequest) {
-							if (data.request.side) data.request.side.id = data.side;
-							room.receiveRequest(data.request);
-						}
-					}
-				},
-				message: function (message) {
-					// Correct way to send popups:
-					//   |popup|MESSAGE
-					self.addPopupMessage(message.message);
-					if (self.rooms['']) self.rooms[''].resetPending();
-				},
-				console: function (message) {
-					if (message.pm) {
-						// Correct way to send PMs:
-						//   |pm|SOURCE|TARGET|MESSAGE
-						self.rooms[''].addPM(message.name, message.message, message.pm);
-						if (self.rooms['lobby'] && !Tools.prefs('nolobbypm')) {
-							self.rooms['lobby'].addPM(message.name, message.message, message.pm);
-						}
-					} else if (message.rawMessage) {
-						// Correct way to send raw console messages:
-						//   |raw|RAWMESSAGE
-						self.receive('|raw|'+message.rawMessage);
-					} else {
-						// Correct way to send console messages:
-						//   MESSAGE
-						self.receive(message.message);
-					}
-				},
-				nameTaken: function (data) {
-					// Correct way to declare a name taken:
-					//   |nametaken|NAME|MESSAGE
-					app.addPopup(LoginPopup, {name: data.name, reason: data.reason || ''});
-				},
-				command: function (message) {
-					// Correct way to send a query response:
-					//   |queryresponse|TYPE|MESSAGE
-					self.trigger('response:'+message.command, message);
-				}
-			};
-
 			var socketopened = false;
 			var altport = (Config.server.port === Config.server.altport);
 			var altprefix = false;
@@ -674,11 +563,6 @@
 					_gaq.push(['_trackEvent', 'Alt port connection', Config.server.id]);
 				}
 				self.trigger('init:socketopened');
-				// Join the lobby if it fits on the screen.
-				// Send the join message even if it doesn't, for legacy servers.
-				if (Config.server.id !== 'showdown') {
-					self.send('{"room":"lobby","nojoin":1,"type":"join"}', true);
-				}
 
 				var avatar = Tools.prefs('avatar');
 				if (avatar) {
@@ -703,10 +587,7 @@
 					self.receive(msg.data);
 					return;
 				}
-				var data = $.parseJSON(msg.data);
-				if (!data) return;
-				// Handle JSON messages.
-				if (events[data.type]) events[data.type](data);
+				alert("This server is using an outdated version of Pokémon Showdown and needs to be updated.");
 			};
 			var reconstructSocket = function(socket) {
 				var s = constructSocket();
@@ -1671,9 +1552,11 @@
 					self.clickNotification(tag);
 				};
 				if (Tools.prefs('temporarynotifications')) {
-					if (notification.cancel) setTimeout(function () {
-						notification.cancel();
-					}, 5000);
+					if (notification.cancel) {
+						setTimeout(function() {notification.cancel();}, 5000);
+					} else if (notification.close) {
+						setTimeout(function() {notification.close();}, 5000);
+					}
 				}
 				if (once) notification.psAutoclose = true;
 			} else if (window.macgap) {
@@ -1920,7 +1803,7 @@
 
 			var buf = '<div class="userdetails">';
 			if (avatar) buf += '<img class="trainersprite'+(userid===app.user.get('userid')?' yours':'')+'" src="'+Tools.resolveAvatar(avatar)+'" />';
-			buf += '<strong>' + Tools.escapeHTML(name) + '</strong><br />';
+			buf += '<strong><a href="//pokemonshowdown.com/users/'+userid+'" target="_blank">' + Tools.escapeHTML(name) + '</a></strong><br />';
 			buf += '<small>' + (group || '&nbsp;') + '</small>';
 			if (data.rooms) {
 				var battlebuf = '';
@@ -2081,7 +1964,7 @@
 			} else {
 				buf += '<p>Register your account:</p>';
 			}
-			buf += '<p><label class="label">Username: <strong>' + (data.name || app.user.get('name')) + '</strong><input type="hidden" name="name" value="' + Tools.escapeHTML(data.name || app.user.get('name')) + '" /></label></p>';
+			buf += '<p><label class="label">Username: <strong>' + Tools.escapeHTML(data.name || app.user.get('name')) + '</strong><input type="hidden" name="name" value="' + Tools.escapeHTML(data.name || app.user.get('name')) + '" /></label></p>';
 			buf += '<p><label class="label">Password: <input class="textbox autofocus" type="password" name="password" /></label></p>';
 			buf += '<p><label class="label">Password (confirm): <input class="textbox" type="password" name="cpassword" /></label></p>';
 			buf += '<p><label class="label"><img src="' + Tools.resourcePrefix + 'sprites/bwani/pikachu.gif" /></label></p>';

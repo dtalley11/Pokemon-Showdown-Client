@@ -2367,7 +2367,7 @@ function Battle(frame, logFrame, noPreload) {
 		if (self.startCallback) self.startCallback(self);
 	}
 	this.winner = function (winner) {
-		if (winner) self.message('' + winner + ' won the battle!');
+		if (winner) self.message('' + Tools.escapeHTML(winner) + ' won the battle!');
 		else self.message('Tie between ' + Tools.escapeHTML(self.p1.name) + ' and ' + Tools.escapeHTML(self.p2.name) + '!');
 		self.done = 1;
 	}
@@ -2716,22 +2716,61 @@ function Battle(frame, logFrame, noPreload) {
 				break;
 			case 'sleeptalk':
 			default:
-				// April Fool's 2013
+				// April Fool's 2014
 				if (window.Config && Config.server && Config.server.afd && move.id === 'earthquake') {
+					if (!self.fastForward) {
+						$('body').css({
+							position: 'absolute',
+							left: 0,
+							right: 0,
+							top: 0,
+							bottom: 0
+						}).animate({
+							left: -30,
+							right: 30
+						}, 75).animate({
+							left: 30,
+							right: -30
+						}, 100).animate({
+							left: -30,
+							right: 30
+						}, 100).animate({
+							left: 30,
+							right: -30
+						}, 100).animate({
+							left: 0,
+							right: 0
+						}, 100, function() {
+							$(this).css({
+								position: 'static'
+							});
+						});
+					}
 					self.message(pokemon.getName() + ' used <strong>Fissure</strong>!');
 					self.message('Just kidding! It was <strong>Earthquake</strong>!');
+				} else if (window.Config && Config.server && Config.server.afd && (move.id === 'metronome' || move.id === 'sleeptalk' || move.id === 'assist')) {
+					self.message(pokemon.getName() + ' used <strong>' + move.name + '</strong>!');
+					var buttons = ["A", "B", "START", "SELECT", "UP", "DOWN", "LEFT", "RIGHT", "DEMOCRACY", "ANARCHY"];
+					var people = ["Zarel", "The Immortal", "Diatom", "Nani Man", "shaymin", "apt-get", "sirDonovan", "Arcticblast", "Goddess Briyella"];
+					var button;
+					for (var i=0; i<10; i++) {
+						var name = people[Math.floor(Math.random()*people.length)];
+						if (!button) button = buttons[Math.floor(Math.random()*buttons.length)];
+						self.log('<div class="chat"><strong style="' + hashColor(toUserid(name)) + '" class="username" data-name="'+Tools.escapeHTML(name)+'">' + Tools.escapeHTML(name) + ':</strong> <em>' + button + '</em></div>');
+						button = (name === 'Diatom' ? "thanks diatom" : null);
+					}
+				} else if (window.Config && Config.server && Config.server.afd && (move.id === 'taunt')) {
+					self.message(pokemon.getName() + ' used <strong>' + move.name + '</strong>!');
 				} else {
 					self.message(pokemon.getName() + ' used <strong>' + move.name + '</strong>!');
 				}
 				break;
 			}
-			// April Fool's 2013
 			if (window.Config && Config.server && Config.server.afd && move.id === 'taunt') {
 				var quotes = [
 					"Yo mama so fat, she 4x resists Ice- and Fire-type attacks!",
 					"Yo mama so ugly, Captivate raises her opponent's Special Attack!",
 					"Yo mama so dumb, she lowers her Special Attack when she uses Nasty Plot!",
-					"Yo mama so fat, Smogon switched to Pokemon Showdown because PO had an integer overflow bug when you used Grass Knot against her!",
 					"Yo mama so dumb, she thought Sylveon would be Light Type!"
 				];
 				var quote = quotes[(self.p1.name.charCodeAt(2) + self.p2.name.charCodeAt(2) + self.turn) % quotes.length];
@@ -4229,6 +4268,9 @@ function Battle(frame, logFrame, noPreload) {
 				case 'powder':
 					actions += 'When the flame touched the powder on the Pokémon, it exploded!';
 					break;
+				case 'fairylock':
+					actions += 'No one will be able to run away during the next turn!';
+					break;
 
 				// ability activations
 				case 'sturdy':
@@ -4402,6 +4444,12 @@ function Battle(frame, logFrame, noPreload) {
 				case 'gravity':
 					actions += "Gravity intensified!";
 					break;
+				case 'mudsport':
+					actions += "Electric's power was weakened!";
+					break;
+				case 'watersport':
+					actions += "Fire's power was weakened!";
+					break;
 				default:
 					actions += effect.name+" started!";
 					break;
@@ -4425,6 +4473,12 @@ function Battle(frame, logFrame, noPreload) {
 					break;
 				case 'gravity':
 					actions += 'Gravity returned to normal!';
+					break;
+				case 'mudsport':
+					actions += 'The effects of Mud Sport have faded.';
+					break;
+				case 'watersport':
+					actions += 'The effects of Water Sport have faded.';
 					break;
 				default:
 					actions += effect.name+" ended!";

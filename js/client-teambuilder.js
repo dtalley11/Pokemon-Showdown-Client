@@ -1055,9 +1055,8 @@
 				if (!pokemon) {
 					if (this.curTeam) {
 						if (this.curTeam.format === 'ou') return ['OU','BL','Limbo A','Limbo B','Limbo C','Limbo','NFE','LC Uber','LC'];
-						if (this.curTeam.format === 'cap') return ['CAP','OU','BL','Limbo A','Limbo B','Limbo C','Limbo','NFE','LC Uber','LC'];
-						if (this.curTeam.format === 'Lab') return ['Lab','OU','BL','Limbo A','Limbo B','Limbo C','Limbo','NFE','LC Uber','LC'];
-						if (this.curTeam.format === 'uu') return ['Limbo A','Limbo B','Limbo C','Limbo','NFE','LC Uber','LC'];
+						if (this.curTeam.format === 'cap') return ['CAP','OU','BL','UU','Limbo A','Limbo B','Limbo C','Limbo','NFE','LC Uber','LC'];
+						if (this.curTeam.format === 'uu') return ['UU','Limbo A','Limbo B','Limbo C','Limbo','NFE','LC Uber','LC'];
 						if (this.curTeam.format === 'lab') return ['Lab','OU','BL','Limbo A','Limbo B','Limbo C','Limbo','NFE','LC Uber','LC'];
 						if (this.curTeam.format === 'lc') return ['LC','NFE','Limbo'];
 					}
@@ -1306,8 +1305,8 @@
 					if (move.id === 'batonpass' || move.id === 'healingwish' || move.id === 'lunardance') {
 						moveCount['Support']++;
 					} else if (move.id === 'naturepower') {
-						moveCount['Physical']++;
-					} else if (move.id === 'protect' || move.id === 'detect') {
+						moveCount['Special']++;
+					} else if (move.id === 'protect' || move.id === 'detect' || move.id === 'spikyshield' || move.id === 'kingsshield') {
 						moveCount['Stall']++;
 					} else if (move.id === 'wish') {
 						moveCount['Restoration']++;
@@ -1322,7 +1321,7 @@
 							moveCount['SpecialSetup']++;
 						} else if (move.id === 'dragondance' || move.id === 'swordsdance' || move.id === 'coil' || move.id === 'bulkup' || move.id === 'curse' || move.id === 'bellydrum') {
 							moveCount['PhysicalSetup']++;
-						} else if (move.id === 'nastyplot' || move.id === 'tailglow' || move.id === 'quiverdance' || move.id === 'calmmind') {
+						} else if (move.id === 'nastyplot' || move.id === 'tailglow' || move.id === 'quiverdance' || move.id === 'calmmind' || move.id === 'geomancy') {
 							moveCount['SpecialSetup']++;
 						}
 						if (move.id === 'substitute') moveCount['Stall']++;
@@ -1331,13 +1330,17 @@
 						if (move.id === 'toxic' || move.id === 'leechseed' || move.id === 'willowisp') moveCount['Stall']++;
 						moveCount['Support']++;
 					}
-				} else if (move.id === 'rapidspin' || move.id === 'knockoff' || move.id === 'counter' || move.id === 'mirrorcoat' || move.id === 'metalburst') {
+				} else if (move.id === 'rapidspin' || move.id === 'counter' || move.id === 'mirrorcoat' || move.id === 'metalburst') {
 					moveCount['Support']++;
-				} else if (move.id === 'nightshade' || move.id === 'seismictoss') {
+				} else if (move.id === 'nightshade' || move.id === 'seismictoss' || move.id === 'foulplay') {
 					moveCount['Offense']++;
+				} else if (move.id === 'fellstinger') {
+					moveCount['PhysicalSetup']++;
+					moveCount['Setup']++;
 				} else {
 					moveCount[move.category]++;
 					moveCount['Offense']++;
+					if (move.id === 'knockoff') moveCount['Support']++;
 					if (move.id === 'scald' || move.id === 'voltswitch' || move.id === 'uturn') moveCount[move.category] -= 0.2;
 				}
 			}
@@ -1367,7 +1370,7 @@
 			}
 			if (abilityid === 'flamebody') physicalBulk *= 1.1;
 
-			if (hasMove['calmmind'] || hasMove['quiverdance']) {
+			if (hasMove['calmmind'] || hasMove['quiverdance'] || hasMove['geomancy']) {
 				specialBulk *= 1.3;
 				moveCount['SpecialStall']++;
 			}
@@ -1428,6 +1431,7 @@
 				physicalBulk *= 1.5;
 				specialBulk *= 1.5;
 			}
+			if (itemid === 'assaultvest') specialBulk *= 1.5;
 
 			var bulk = physicalBulk + specialBulk;
 			if (bulk < 46000 && stats.spe >= 70) isFast = true;
